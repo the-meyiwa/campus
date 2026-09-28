@@ -6,4 +6,4 @@ The app is a static site. Records are saved in this browser under the chosen nam
 
 Run `npm run build` to check source and tests and produce `build/`; `npm start` serves the source locally. The site uses the black, white and Apple blue palette. GitHub: https://github.com/the-meyiwa/campus.
 
-The previously hosted site remains at https://campus-architecture-study.madselkie.chatgpt.site. This new version has not been published there: automatic approval review rejected sending the local source to that hosting destination. The current code and build are available in GitHub pending approval to update the site.
+The current app was published to the existing owner-private site at https://campus-architecture-study.madselkie.chatgpt.site on 28 September 2026 from source commit `d2b3fc0864569a4bb900ea22d1a7b2bcd72f2b81`. The published build passed seven functional tests. Site access remains private to the owner.
