@@ -15,7 +15,7 @@ for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
   if (/^(?:https?:|data:)/.test(asset)) continue;
   if (!fs.existsSync(path.join(source, asset))) throw Error(`Missing page asset: ${asset}`);
 }
-for (const asset of ['index.html', 'styles.css', 'portal.css', 'core.js', 'study.js', 'app.js', 'sw.js']) {
+for (const asset of ['index.html', 'styles.css', 'portal.css', 'core.js', 'app.js', 'sw.js']) {
   if (!files.includes(asset)) throw Error(`Missing application asset: ${asset}`);
 }
 run(['--test', 'core.test.cjs']);

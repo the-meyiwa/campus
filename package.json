@@ -2,7 +2,7 @@
   "name": "campus-student-app",
   "version": "1.0.0",
   "private": true,
-  "description": "Working student campus demo and BU-SEN313 architecture study",
+  "description": "Student campus planner",
   "scripts": {
     "start": "node preview.cjs",
     "test": "node --test core.test.cjs",
