@@ -4,7 +4,7 @@ Campus helps students keep classes, tasks and personal progress together. Its pa
 
 Run `npm start` and open http://127.0.0.1:4173. Enter a full name and choose Babcock, Covenant or ABUAD. Everyone can enter; no password or university account is required.
 
-The workspace starts empty. Add courses and class times to build a timetable, track tasks, and enter scores for a weighted progress view. Students can edit or remove what they add, export their calendar, and download their data. Records persist in the browser and the app shell is cached for offline use after the first load.
+The workspace starts empty. Add courses and class times to build a timetable, track tasks, receive in-app reminders based on upcoming classes and deadlines, and enter scores for a weighted progress view. Students can edit or remove what they add, export their calendar, and download their data. Records persist in the browser and the app shell is cached for offline use after the first load.
 
 Run `npm run build` to check JavaScript and assets, run tests, and produce `build/`. GitHub Actions performs the same build on each push.
 
