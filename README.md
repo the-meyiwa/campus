@@ -2,7 +2,9 @@
 
 An academic architecture study, using black, white, and Apple blue (#0071e3).
 
-Run `node preview.cjs` and open http://127.0.0.1:4173. No dependencies or build are required. Use “Enter demo workspace” to begin.
+Run `npm start` and open http://127.0.0.1:4173. No dependency installation is required. Use “Enter demo workspace” to begin.
+
+Run `npm run build` to validate all JavaScript, verify page assets, run the tests, and produce a deployable `build/` folder. `npm test` runs the domain tests separately. GitHub Actions runs the build on each push and pull request and saves the output as a downloadable artifact. Sites continues to serve the identical assets from `dist/`.
 
 The working demo supports registration/drop with clash, prerequisite and unit-limit validation, a derived timetable, calendar export, sample results with weighted GPA and CSV export, read/unread notifications, editable profile, light/dark/system themes, and a 30-minute demo session. Local browser storage persists records and drafts; a service worker caches the app for offline reloads after the first successful load. Other tabs on the same origin receive storage updates (last save wins).
 
