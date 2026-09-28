@@ -1,0 +1,23 @@
+(function(root){
+  'use strict';
+  const courses = [
+    {id:'SEN313',title:'Mobile Application Development',units:3,day:1,start:9,end:11,room:'Computing Lab 2',lecturer:'Dr. A. Bello',required:null},
+    {id:'SEN311',title:'Software Engineering',units:3,day:2,start:10,end:12,room:'Lecture Hall C',lecturer:'Dr. E. Okoro',required:null},
+    {id:'CSC301',title:'Database Management Systems',units:3,day:3,start:9,end:11,room:'Computing Lab 1',lecturer:'Dr. T. Adeyemi',required:null},
+    {id:'CSC305',title:'Computer Networks',units:3,day:4,start:12,end:14,room:'Lecture Hall B',lecturer:'Dr. K. Musa',required:null},
+    {id:'MTH301',title:'Numerical Methods',units:3,day:5,start:9,end:11,room:'Science Block 4',lecturer:'Dr. J. Eze',required:null},
+    {id:'GST301',title:'Entrepreneurship',units:2,day:2,start:14,end:16,room:'Lecture Hall A',lecturer:'Mrs. F. James',required:null},
+    {id:'CSC307',title:'Artificial Intelligence',units:3,day:1,start:10,end:12,room:'Computing Lab 3',lecturer:'Dr. D. Thomas',required:null},
+    {id:'SEN401',title:'Advanced Software Architecture',units:3,day:5,start:12,end:14,room:'Lecture Hall C',lecturer:'Dr. A. Bello',required:'SEN311'}
+  ];
+  const results=[{id:'CSC201',title:'Data Structures',units:3,score:78},{id:'SEN201',title:'Software Design',units:3,score:72},{id:'MTH201',title:'Discrete Mathematics',units:3,score:64},{id:'GST201',title:'Communication Skills',units:2,score:81}];
+  function seed(){return {version:1,profile:{name:'Alex Morgan',email:'alex@example.com',phone:'',department:'Software Engineering',level:'300',studentId:'DEMO/2026/001'},registered:['SEN313','SEN311','CSC301'],draft:[],read:[],updatedAt:new Date().toISOString(),notices:[{id:'welcome',title:'Welcome to the new semester',body:'Your sample student workspace is ready. Register courses to build your timetable.',date:'2026-09-28'},{id:'registration',title:'Course registration is open',body:'Select up to 18 units. Timetable clashes and prerequisites are checked before you submit.',date:'2026-09-28'}]};}
+  const grade=score=>score>=70?['A',5]:score>=60?['B',4]:score>=50?['C',3]:score>=45?['D',2]:score>=40?['E',1]:['F',0];
+  function validate(ids){if(new Set(ids).size!==ids.length)return 'A course can only be registered once.';const selected=ids.map(id=>courses.find(c=>c.id===id));if(selected.some(c=>!c))return 'One of these courses is unavailable.';if(selected.reduce((s,c)=>s+c.units,0)>18)return 'The semester limit is 18 units. Remove a course to continue.';for(const c of selected){if(c.required&&!results.some(r=>r.id===c.required&&r.score>=40))return `${c.id} requires a previous pass in ${c.required}.`;for(const other of selected)if(other.id!==c.id&&other.day===c.day&&other.start<c.end&&c.start<other.end)return `${c.id} overlaps with ${other.id}. Choose courses with different class times.`;}return null;}
+  function register(state,ids){const error=validate([...state.registered,...ids]);if(error)throw Error(error);if(!ids.length)throw Error('Choose at least one course.');const next=structuredClone(state);next.registered.push(...ids);next.draft=[];next.notices.unshift({id:'registration-'+Date.now(),title:'Registration confirmed in demo',body:`${ids.join(', ')} added to your timetable.`,date:new Date().toISOString()});return next;}
+  function drop(state,id){if(!state.registered.includes(id))throw Error('This course is not registered.');const next=structuredClone(state);next.registered=next.registered.filter(x=>x!==id);return next;}
+  function profile(state,values){const name=values.name.trim(),email=values.email.trim(),phone=values.phone.trim();if(name.length<2||name.length>80)throw Error('Enter a name between 2 and 80 characters.');if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>120)throw Error('Enter a valid email address.');if(phone&&!/^\+?[\d ()-]{7,20}$/.test(phone))throw Error('Enter a valid phone number or leave it blank.');return {...state,profile:{...state.profile,name,email,phone}};}
+  function load(storage){const text=storage.getItem('campus.data.v1');if(!text)return seed();const state=JSON.parse(text);if(state.version!==1||!Array.isArray(state.registered)||validate(state.registered)||!Array.isArray(state.draft)||!Array.isArray(state.notices)||!Array.isArray(state.read)||!state.profile)throw Error('Saved data cannot be read. Export it or reset the demo in Settings.');return state;}
+  function save(storage,state){const next={...state,updatedAt:new Date().toISOString()};storage.setItem('campus.data.v1',JSON.stringify(next));return next;}
+  const api={courses,results,seed,grade,validate,register,drop,profile,load,save};if(typeof module!=='undefined')module.exports=api;else root.CampusCore=api;
+})(globalThis);
